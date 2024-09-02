@@ -1,0 +1,71 @@
+* {
+  margin: 0;
+}
+
+body,
+html {
+  overflow: hidden;
+  height: 100%;
+}
+
+.wrapper {
+  height: 100%;
+  width: 100dvw;
+  display: grid;
+  align-items: center;
+  justify-self: center;
+}
+
+h1 {
+  font-family: "Matemasie";
+  font-size: 4rem;
+  text-align: center;
+  letter-spacing: 1rem;
+}
+
+.birthday-dude {
+  margin-inline: auto;
+}
+
+#canvas_confetti {
+  z-index: -1;
+  position: absolute;
+  width: 100dvw;
+  height: 100dvh;
+}
+
+.message {
+  padding-inline: 2rem;
+  text-align: center;
+  font-size: 2rem;
+  font-family: "Lato";
+}
+
+.quote {
+  position: absolute;
+  font-family: "Matemasie";
+  font-size: 1.25rem;
+  color: #1d1d1d;
+  transition: 200ms font-size;
+}
+
+[data-number="1"] {
+  top: 15%;
+  left: 1rem;
+  transform: rotate(15deg);
+  color: pink;
+}
+
+[data-number="2"] {
+  top: 50%;
+  right: 1rem;
+  transform: rotate(-15deg);
+  color: orange;
+}
+
+[data-number="3"] {
+  bottom: 20%;
+  left: 1rem;
+  transform: rotate(15deg);
+  color: blueviolet;
+}

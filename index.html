@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Matemasie&display=swap"
+      rel="stylesheet"
+    />
+    <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap" rel="stylesheet" />
+    <link href="/styles.css" rel="stylesheet" />
+    <title>Document</title>
+  </head>
+    <main id="birthday_container" class="wrapper">
+      <h1>Feliz Cumpleaños</h1>
+
+      <figure class="birthday-dude">
+        <img src="./image.jpg" height="500" />
+      </figure>
+
+      <p class="message">
+        <strong>¡Feliz cumpleaños!</strong><br/> Espero que tengas un día
+        maravilloso. Que todos tus deseos se hagan realidad. Que la vida te
+        sonría y que siempre tengas motivos para reír. Que la felicidad te
+        acompañe siempre. ¡Disfruta tu día!
+      </p>
+
+      <p class="quote" data-number="1">Vida antes que Muerte</p>
+      <p class="quote" data-number="2">Fuerza antes que Debilidad</p>
+      <p class="quote" data-number="3">Viaje antes que Destino</p>
+
+      <audio id="audio-control">
+        <source src="./music.mp3" type="audio/mpeg" />
+      </audio>
+
+      <div class="decoration"></div>
+      <canvas id="canvas_confetti"></canvas>
+
+    </main>
+
+    <script defer>
+      const audio = document.getElementById("audio-control");
+      audio.volume = 0.25;
+      audio.play();
+    </script>
+
+    <script defer>
+      // Confetti
+      //Setup canvas by creating in doc
+      var canvas = document.getElementById("canvas_confetti");
+      var context = canvas.getContext("2d");
+      canvas.width = document.getElementById("birthday_container").clientWidth;
+      canvas.height =
+        document.getElementById("birthday_container").clientHeight;
+      var calculatedDensity = canvas.width * 0.025;
+      var calculatedVelocity = canvas.width * 0.005;
+      var calculatedLife = canvas.height * 0.65;
+      var calculatedStartingX = canvas.width / 2;
+
+      const background = new Image();
+      background.src = "./sea.jpg";
+
+      //Generating many particles
+      //Make object with settings for function
+      var particles = {},
+        particleIndex = 0,
+        settings = {
+          density: calculatedDensity,
+          particleSize: 8,
+          particleSizeVariety: 1.5,
+          startingX: calculatedStartingX,
+          startingY: -20,
+          velX: calculatedVelocity,
+          velY: 2,
+          gravity: 0.015,
+          //maxLife: 300,
+          maxLife: calculatedLife,
+          particleColours: [
+            "#F06292",
+            "#BA68C8",
+            "#64B5F6",
+            "#4DD0E1",
+            "#81C784",
+            "#DCE775",
+            "#FFD54F",
+            "#FF8A65",
+            "#EEEEEE",
+          ],
+        };
+
+      //Function that will create particles
+      function Particle() {
+        //Starting positions and velocities
+        this.x = settings.startingX;
+        this.y = settings.startingY;
+        //Random X and Y velocities
+        this.vx = Math.random() * settings.velX - settings.velX / 2;
+        this.vy = Math.random() * settings.velY - settings.velY / 2;
+        //this.vx = 10;
+        //this.vy = 10;
+
+        //Set up rotation & center of origin
+        this.particleSize = parseInt(
+          Math.random() * (settings.particleSizeVariety * 2) +
+            settings.particleSize
+        );
+        this.rot = 0;
+        this.centerOfOriginX = -this.particleSize / 2;
+        this.centerOfOriginY = -this.particleSize / 4;
+
+
+        //Choose a random colour
+        this.particleColor =
+          settings.particleColours[
+            parseInt(Math.random() * settings.particleColours.length)
+          ];
+
+        //Add new particle to index - this is a way to store the particles created
+        particleIndex++;
+        particles[particleIndex] = this;
+        this.id = particleIndex;
+        //Will be used later to remove particle
+        this.life = -10 + parseInt(Math.random() * 20);
+      }
+
+      //Add a 'draw' method to the Particle function
+      Particle.prototype.draw = function () {
+        this.x += this.vx;
+        this.y += this.vy;
+
+        //calculate rotation
+        var period = 100;
+        this.rot +=
+          (Math.sin((this.life * 2 * Math.PI) / period) / 2) *
+          (Math.random() * 2);
+
+        //Add gravity
+        this.vy += settings.gravity;
+
+        //Age the particle by adding to 'life'
+        this.life++;
+
+        //Remove the particle if it's old
+        if (this.life >= settings.maxLife) {
+          delete particles[this.id];
+        }
+
+        //Create shape
+        context.beginPath();
+        context.fillStyle = this.particleColor;
+        //save context position
+        context.save();
+        context.translate(this.x, this.y);
+
+        var rotationAmount = 5;
+        //rotate by sine value
+        context.rotate(this.rot / rotationAmount);
+
+        //translate to near random center of origin
+        context.translate(this.centerOfOriginX, this.centerOfOriginY);
+        //context.translate(0,0);
+
+        context.globalAlpha = 0.9;
+        context.fillRect(0, 0, this.particleSize, this.particleSize / 2);
+        context.restore();
+      };
+
+      //Set up interval to draw particles
+      setInterval(function () {
+        //Fillstyle transparency adds motion trails
+        //#673AB7 purple
+        //#2196F3 blue
+        //#009688 teal
+        //#FFEB3B yellow
+        // "rgba(39,174,96,.98)"; green
+        context.drawImage(background, 0, 0, canvas.width, canvas.height);
+        context.fillStyle = "#0000002e";
+        context.fillRect(0, 0, canvas.width, canvas.height);
+        
+        // Draw the particles
+        for (var i = 0; i < settings.density; i++) {
+          // Random chance of creating a particle corresponding to an chance of 1 per second per "density" value
+          if (Math.random() > 0.97) {
+            new Particle();
+          }
+        }
+
+        //Use the draw method for all the particles in particles[]
+        for (var i in particles) {
+          particles[i].draw();
+        }
+      }, 16);
+    </script>
+
+    <script defer>
+      const items = document.getElementsByClassName("quote");
+        for (let i = 0; i < items.length; i++) {
+        let startingPoint = 1;
+        const item = items[i];
+
+        const interval = setInterval(() => {
+          item.style.fontSize = `${startingPoint}rem`;
+          startingPoint += 0.75;
+        }, 1500);
+
+      }
+    </script>
+  </body>
+</html>
