@@ -9,22 +9,26 @@
       href="https://fonts.googleapis.com/css2?family=Matemasie&display=swap"
       rel="stylesheet"
     />
-    <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap" rel="stylesheet" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap"
+      rel="stylesheet"
+    />
     <link href="/styles.css" rel="stylesheet" />
     <title>Document</title>
   </head>
+  <body>
     <main id="birthday_container" class="wrapper">
       <h1>Feliz Cumpleaños</h1>
 
       <figure class="birthday-dude">
-        <img src="./image.jpg" height="500" />
+        <img src="./image.jpeg" height="500" />
       </figure>
 
       <p class="message">
-        <strong>¡Feliz cumpleaños!</strong><br/> Espero que tengas un día
-        maravilloso. Que todos tus deseos se hagan realidad. Que la vida te
-        sonría y que siempre tengas motivos para reír. Que la felicidad te
-        acompañe siempre. ¡Disfruta tu día!
+        <strong>¡Feliz cumpleaños!</strong><br />
+        Espero que tengas un día maravilloso. Que todos tus deseos se hagan
+        realidad. Que la vida te sonría y que siempre tengas motivos para reír.
+        Que la felicidad te acompañe siempre. ¡Disfruta tu día!
       </p>
 
       <p class="quote" data-number="1">Vida antes que Muerte</p>
@@ -37,7 +41,6 @@
 
       <div class="decoration"></div>
       <canvas id="canvas_confetti"></canvas>
-
     </main>
 
     <script defer>
@@ -110,7 +113,6 @@
         this.centerOfOriginX = -this.particleSize / 2;
         this.centerOfOriginY = -this.particleSize / 4;
 
-
         //Choose a random colour
         this.particleColor =
           settings.particleColours[
@@ -178,7 +180,7 @@
         context.drawImage(background, 0, 0, canvas.width, canvas.height);
         context.fillStyle = "#0000002e";
         context.fillRect(0, 0, canvas.width, canvas.height);
-        
+
         // Draw the particles
         for (var i = 0; i < settings.density; i++) {
           // Random chance of creating a particle corresponding to an chance of 1 per second per "density" value
@@ -196,7 +198,7 @@
 
     <script defer>
       const items = document.getElementsByClassName("quote");
-        for (let i = 0; i < items.length; i++) {
+      for (let i = 0; i < items.length; i++) {
         let startingPoint = 1;
         const item = items[i];
 
@@ -204,7 +206,6 @@
           item.style.fontSize = `${startingPoint}rem`;
           startingPoint += 0.75;
         }, 1500);
-
       }
     </script>
   </body>
