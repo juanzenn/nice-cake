@@ -17,7 +17,11 @@
     <title>Document</title>
   </head>
   <body>
-    <main id="birthday_container" class="wrapper">
+    <div id="dale-play">
+      <button onclick="playAudio()" id="button_play">DALE PLAY MENOR</button>
+    </div>
+
+    <main style="display: none" id="birthday_container" class="wrapper">
       <h1>Feliz Cumpleaños</h1>
 
       <figure class="birthday-dude">
@@ -40,23 +44,36 @@
       </audio>
 
       <div class="decoration"></div>
-      <canvas id="canvas_confetti"></canvas>
+      <canvas id="canvas_confetti" width="1000px" height="1000px"></canvas>
     </main>
 
-    <script defer>
+    <script>
       const audio = document.getElementById("audio-control");
       audio.volume = 0.25;
-      audio.play();
+
+      function playAudio() {
+        audio.play();
+        document.getElementById("birthday_container").style.display = "grid";
+        document.getElementById("dale-play").style.display = "none";
+
+        const items = document.getElementsByClassName("quote");
+        for (let i = 0; i < items.length; i++) {
+          let startingPoint = 1;
+          const item = items[i];
+
+          const interval = setInterval(() => {
+            item.style.fontSize = `${startingPoint}rem`;
+            startingPoint += 0.75;
+          }, 1500);
+        }
+      }
     </script>
 
-    <script defer>
+    <script>
       // Confetti
       //Setup canvas by creating in doc
       var canvas = document.getElementById("canvas_confetti");
       var context = canvas.getContext("2d");
-      canvas.width = document.getElementById("birthday_container").clientWidth;
-      canvas.height =
-        document.getElementById("birthday_container").clientHeight;
       var calculatedDensity = canvas.width * 0.025;
       var calculatedVelocity = canvas.width * 0.005;
       var calculatedLife = canvas.height * 0.65;
@@ -194,19 +211,6 @@
           particles[i].draw();
         }
       }, 16);
-    </script>
-
-    <script defer>
-      const items = document.getElementsByClassName("quote");
-      for (let i = 0; i < items.length; i++) {
-        let startingPoint = 1;
-        const item = items[i];
-
-        const interval = setInterval(() => {
-          item.style.fontSize = `${startingPoint}rem`;
-          startingPoint += 0.75;
-        }, 1500);
-      }
     </script>
   </body>
 </html>

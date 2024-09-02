@@ -44,7 +44,6 @@ h1 {
 .quote {
   position: absolute;
   font-family: "Matemasie";
-  font-size: 1.25rem;
   color: #1d1d1d;
   transition: 200ms font-size;
 }
@@ -68,4 +67,12 @@ h1 {
   left: 1rem;
   transform: rotate(15deg);
   color: blueviolet;
+}
+
+#dale-play {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
